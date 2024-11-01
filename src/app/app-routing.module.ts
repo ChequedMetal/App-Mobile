@@ -10,7 +10,31 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },  {
+    path: 'login',
+    loadChildren: () => import('./paginas/login/login.module').then( m => m.LoginPageModule)
   },
+  {
+    path: 'register',
+    loadChildren: () => import('./paginas/register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () => import('./paginas/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
+  },
+  {
+    path: 'perfil-usuario',
+    loadChildren: () => import('./paginas/perfil-usuario/perfil-usuario.module').then( m => m.PerfilUsuarioPageModule)
+  },
+  {
+    path: 'ver-asistencia',
+    loadChildren: () => import('./paginas/ver-asistencia/ver-asistencia.module').then( m => m.VerAsistenciaPageModule)
+  },
+  {
+    path: 'escanear-qr',
+    loadChildren: () => import('./paginas/escanear-qr/escanear-qr.module').then( m => m.EscanearQrPageModule)
+  },
+
 ];
 
 @NgModule({
