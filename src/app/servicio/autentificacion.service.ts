@@ -14,7 +14,9 @@ export class AuthService {
     private firestore: AngularFirestore,
     private router: Router
   ) {}
-
+  get usuarioActual() {
+    return this.currentUser;
+  }
   // Iniciar sesión con correo y contraseña
   async iniciarSesion(email: string, password: string): Promise<boolean> {
     try {
