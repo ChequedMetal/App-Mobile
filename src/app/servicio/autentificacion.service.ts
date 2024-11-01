@@ -50,7 +50,6 @@ export class AuthService {
       if (userCredential.user) {
         const uid = userCredential.user.uid;
   
-        // Definir los datos del nuevo usuario con la estructura deseada
         const newUser = {
           email,                     // Almacena el correo del usuario en Firestore
           img: extraData.img || '',  // Imagen opcional del usuario
@@ -80,7 +79,12 @@ export class AuthService {
       throw error;  // Dejar que el error se propague para que sea capturado externamente
     }
   }
-  
+  obtenerUsuarioAutenticado() {
+    if (!this.currentUser && localStorage.getItem('user')) {
+      this.currentUser = JSON.parse(localStorage.getItem('user')!);
+    }
+    return this.currentUser;
+  }
   
 
   // Cerrar sesión del usuario

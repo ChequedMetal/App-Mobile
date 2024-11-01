@@ -34,6 +34,10 @@ const routes: Routes = [
     path: 'escanear-qr',
     loadChildren: () => import('./paginas/escanear-qr/escanear-qr.module').then( m => m.EscanearQrPageModule)
   },
+  {
+    path: 'editar-perfil',
+    loadChildren: () => import('./paginas/editar-perfil/editar-perfil.module').then( m => m.EditarPerfilPageModule)
+  },
 
 ];
 
