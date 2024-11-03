@@ -51,3 +51,12 @@ ion-content {
   --background: opacity: 0.8;
 }
 
+ion-button {
+  --background: #8A2BE2; /* Color de fondo violeta */
+  --background-activated: #7B26C9; /* Color de fondo al presionar */
+  --background-focused: #9A33F0; /* Color de fondo al enfocar */
+  --background-hover: #7B26C9; /* Color de fondo al pasar el cursor */
+  --color: black; /* Color del texto en negro */
+}
+
+

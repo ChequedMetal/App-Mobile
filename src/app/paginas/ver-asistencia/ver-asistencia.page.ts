@@ -18,7 +18,7 @@ export class VerAsistenciaPage implements OnInit {
   // Función para formatear la fecha de YYYYMMDD a una fecha legible
   formatearFecha(fecha: string): string {
     const año = parseInt(fecha.slice(0, 4), 10);
-    const mes = parseInt(fecha.slice(4, 6), 10) - 1; // Restar 1 porque los meses empiezan en 0
+    const mes = parseInt(fecha.slice(4, 6), 10) - 1; 
     const día = parseInt(fecha.slice(6, 8), 10);
     
     const date = new Date(año, mes, día);

@@ -12,7 +12,7 @@ export class PassRecoveryPage {
 
   constructor(private authService: AuthService, private alertController: AlertController) {}
 
-  // Método para solicitar el restablecimiento de contraseña
+  
   async solicitarRecuperacion() {
     if (!this.email) {
       this.mostrarAlerta('Por favor, ingresa un correo válido.');
@@ -22,7 +22,7 @@ export class PassRecoveryPage {
     try {
       await this.authService.enviarRecuperacionPassword(this.email);
       this.mostrarAlerta('Se ha enviado un correo para restablecer tu contraseña.');
-      this.email = ''; // Limpiar el campo de email después de enviar
+      this.email = ''; 
     } catch (error) {
       const errorMessage = (error as Error).message || 'Error al enviar el correo de recuperación.';
       this.mostrarAlerta(errorMessage);
@@ -30,7 +30,7 @@ export class PassRecoveryPage {
     
   }
 
-  // Método para mostrar alertas
+  
   async mostrarAlerta(mensaje: string) {
     const alert = await this.alertController.create({
       header: 'Recuperación de Contraseña',

@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Perfil usuario</ion-title>
+    <ion-title>Perfil de Usuario</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>    
@@ -10,10 +10,11 @@
 <ion-content class="ion-padding">
   <!-- Contenedor principal de la página -->
   <div #container> 
-    <!--carta para perfil-->
+    <!-- Carta para el perfil con imagen de perfil destacada -->
     <ion-card>
       <ion-card-content>
-        <ion-item lines="none">
+        <ion-item lines="none" class="perfil-item">
+          <!-- Avatar con imagen de perfil -->
           <ion-avatar slot="start">
             <img [src]="imagenPerfil" alt="Imagen de Perfil">
           </ion-avatar>
@@ -25,18 +26,18 @@
       </ion-card-content>
     </ion-card> 
 
-    <!--vista de opciones-->
+    <!-- Vista de opciones -->
     <ion-list>
       <ion-item lines="full">
         <ion-icon name="create-outline" slot="start"></ion-icon>
         <ion-label>Editar Perfil</ion-label>
-        <ion-button fill="clear" color="medium" disabled>Proximamente</ion-button>
+        <ion-button fill="clear" color="medium" disabled>Próximamente</ion-button>
       </ion-item>
 
       <ion-item lines="full">
         <ion-icon name="settings-outline" slot="start"></ion-icon>
         <ion-label>Configuración</ion-label>
-        <ion-button fill="clear" color="medium" disabled>Proximamente</ion-button>
+        <ion-button fill="clear" color="medium" disabled>Próximamente</ion-button>
       </ion-item>
 
       <ion-item lines="full">
@@ -47,7 +48,7 @@
 
       <ion-item lines="full">
         <ion-icon name="qr-code-outline" slot="start"></ion-icon>
-        <ion-label>Registrar asistencia</ion-label>
+        <ion-label>Registrar Asistencia</ion-label>
         <ion-button fill="solid" color="primary" (click)="Registrar()">Registrar</ion-button>
       </ion-item>
 

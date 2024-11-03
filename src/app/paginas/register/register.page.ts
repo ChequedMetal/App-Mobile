@@ -15,7 +15,7 @@ export class RegisterPage {
 
   constructor(private router: Router, private authService: AuthService) {}
 
-  async onRegister() {
+  async onRegister() {  
     if (this.password !== this.confirmPassword) {
       alert('Las contraseñas no coinciden. Inténtalo de nuevo.');
       return;

@@ -25,7 +25,7 @@ export class LoginPage {
         alert('Credenciales incorrectas, por favor intenta de nuevo.');
       }
     } catch (error: any) {
-      alert(error.message);  // Muestra el mensaje de error personalizado
+      alert(error.message);
       console.error('Error al intentar iniciar sesión:', error);
     }
   }

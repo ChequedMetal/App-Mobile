@@ -14,7 +14,7 @@ export class EscanearQrPage implements OnInit {
 
   ngOnInit() {}
 
-  // Método para iniciar el proceso de escaneo
+  //Con esta se debería escanear el qr, me avisai si te funcionó
   async startScan() {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
@@ -23,12 +23,12 @@ export class EscanearQrPage implements OnInit {
       const file = event.target.files[0];
       if (file) {
         try {
-          // Usamos QrScanner para procesar la imagen
+          
           const resultado = await QrScanner.scanImage(file);
           if (resultado) {
-            this.qrUsuario = resultado; // Almacena el contenido del QR en `qrUsuario`
+            this.qrUsuario = resultado; 
 
-            // Parsear y registrar en Firestore si el QR contiene JSON
+            
             try {
               const qrData = JSON.parse(resultado);
               const { seccion, code, fecha, asistencia } = qrData;
@@ -51,6 +51,6 @@ export class EscanearQrPage implements OnInit {
         }
       }
     };
-    fileInput.click(); // Activa el selector de archivos
+    fileInput.click(); 
   }
 }

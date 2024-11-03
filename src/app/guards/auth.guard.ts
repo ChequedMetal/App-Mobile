@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { AuthService } from '../servicio/autentificacion.service';
 
 @Injectable({
@@ -13,16 +14,18 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    // Verificar si el usuario está autenticado usando el getter
-    const isAuthenticated = this.authService.usuarioActual !== null;
-
-    if (isAuthenticated) {
-      return true; // Permitir el acceso si está autenticado
-    } else {
-      // Redirigir al login si no está autenticado
-      this.router.navigate(['/login']);
-      return false;
-    }
+  ): Observable<boolean | UrlTree> | boolean | UrlTree {
+    return this.authService.usuarioActual.pipe(
+      take(1), // Tomar el estado actual solo una vez al activar la ruta
+      map(user => {
+        if (user) {
+          return true; // Permitir acceso si el usuario está autenticado
+        } else {
+          // Redirigir al login si no está autenticado
+          this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+          return false;
+        }
+      })
+    );
   }
 }
