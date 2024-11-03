@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { arrayUnion } from 'firebase/firestore';
+
 
 @Injectable({
   providedIn: 'root'
@@ -82,11 +84,33 @@ export class AuthService {
     }
   }
   obtenerUsuarioAutenticado() {
-    if (!this.currentUser && localStorage.getItem('user')) {
-      this.currentUser = JSON.parse(localStorage.getItem('user')!);
+    if (!this.currentUser) {
+      const userData = localStorage.getItem('user');
+      this.currentUser = userData ? JSON.parse(userData) : null;
     }
     return this.currentUser;
   }
+  
+  
+
+  async registrarDatosQR(seccion: string, code: string, fecha: string, asistencia: boolean) {
+    try {
+      const qrRecord = { seccion, code, fecha, asistencia }; // Agrega asistencia al objeto
+  
+      if (this.currentUser) {
+        await this.firestore.collection('users').doc(this.currentUser.uid).update({
+          qrRecords: arrayUnion(qrRecord)
+        });
+        console.log('Datos del QR registrados en Firestore:', qrRecord);
+      } else {
+        console.warn('No hay usuario autenticado. Redirigiendo al login...');
+        this.router.navigate(['/login']);
+      }
+    } catch (error) {
+      console.error('Error al registrar los datos del QR en Firestore:', error);
+    }
+  }
+  
   
 
   // Cerrar sesión del usuario
