@@ -20,10 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./paginas/register/register.module').then( m => m.RegisterPageModule)
   },
   {
-    path: 'reset-password',
-    loadChildren: () => import('./paginas/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
-  },
-  {
     path: 'perfil-usuario',
     loadChildren: () => import('./paginas/perfil-usuario/perfil-usuario.module').then(m => m.PerfilUsuarioPageModule),
     canActivate: [AuthGuard]  // Aplica el guard a la ruta de perfil
@@ -42,7 +38,11 @@ const routes: Routes = [
     path: 'editar-perfil',
     loadChildren: () => import('./paginas/editar-perfil/editar-perfil.module').then( m => m.EditarPerfilPageModule),
     canActivate: [AuthGuard]
+  },  {
+    path: 'pass-recovery',
+    loadChildren: () => import('./paginas/pass-recovery/pass-recovery.module').then( m => m.PassRecoveryPageModule)
   },
+
 
 ];
 

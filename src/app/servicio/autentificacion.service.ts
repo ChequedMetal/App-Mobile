@@ -150,8 +150,17 @@ export class AuthService {
       console.error('Error al obtener los datos de asistencia:', error);
       return [];
     }
+  }  
+
+  async enviarRecuperacionPassword(email: string): Promise<void> {
+    try {
+      await this.afAuth.sendPasswordResetEmail(email);
+      console.log('Correo de recuperación enviado exitosamente');
+    } catch (error) {
+      console.error('Error al enviar el correo de recuperación:', error);
+      throw new Error('No se pudo enviar el correo de recuperación. Verifica que el correo esté registrado.');
+    }
   }
-  
 
   // Cerrar sesión del usuario
   async cerrarSesion(): Promise<void> {
