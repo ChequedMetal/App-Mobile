@@ -15,7 +15,15 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
     private router: Router
-  ) {}
+  ) {
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.currentUser = user;
+      } else {
+        this.currentUser = null;
+      }
+    });
+  }
   get usuarioActual() {
     return this.currentUser;
   }
@@ -94,23 +102,55 @@ export class AuthService {
   
 
   async registrarDatosQR(seccion: string, code: string, fecha: string, asistencia: boolean) {
+    if (!this.currentUser) {
+      console.warn('No hay usuario autenticado. Redirigiendo al login...');
+      this.router.navigate(['/login']);
+      return;
+    }
     try {
-      const qrRecord = { seccion, code, fecha, asistencia }; // Agrega asistencia al objeto
+      // Obtener los registros actuales de Firestore para este usuario
+      const userDoc = await this.firestore.collection('users').doc(this.currentUser.uid).get().toPromise();
+      const userData = userDoc?.data() as { qrRecords?: Array<{ seccion: string; code: string; fecha: string; asistencia: boolean }> } || {};
+      const qrRecords = userData.qrRecords ?? [];
   
-      if (this.currentUser) {
+      // Verificar si ya existe un registro con los mismos datos
+      const existeRegistro = qrRecords.some((record) => 
+        record.seccion === seccion && record.code === code && record.fecha === fecha
+      );
+  
+      if (existeRegistro) {
+        console.log('Este registro ya existe. No se guardarán datos duplicados.');
+        alert('Ya has registrado esta asistencia.');
+      } else {
+        // Si no existe, agregar el nuevo registro
+        const qrRecord = { seccion, code, fecha, asistencia };
         await this.firestore.collection('users').doc(this.currentUser.uid).update({
           qrRecords: arrayUnion(qrRecord)
         });
         console.log('Datos del QR registrados en Firestore:', qrRecord);
-      } else {
-        console.warn('No hay usuario autenticado. Redirigiendo al login...');
-        this.router.navigate(['/login']);
+        alert('Datos registrados exitosamente');
       }
     } catch (error) {
       console.error('Error al registrar los datos del QR en Firestore:', error);
     }
   }
+
+  async obtenerAsistencia(): Promise<Array<{ seccion: string; code: string; fecha: string; asistencia: boolean }>> {
+    if (!this.currentUser) {
+      console.warn('No hay usuario autenticado. Redirigiendo al login...');
+      this.router.navigate(['/login']);
+      return [];
+    }
   
+    try {
+      const userDoc = await this.firestore.collection('users').doc(this.currentUser.uid).get().toPromise();
+      const userData = userDoc?.data() as { qrRecords?: Array<{ seccion: string; code: string; fecha: string; asistencia: boolean }> } || {};
+      return userData.qrRecords || []; // Retorna los registros de asistencia o un array vacío si no hay registros
+    } catch (error) {
+      console.error('Error al obtener los datos de asistencia:', error);
+      return [];
+    }
+  }
   
 
   // Cerrar sesión del usuario

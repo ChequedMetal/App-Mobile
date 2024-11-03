@@ -1,13 +1,28 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>ver-asistencia</ion-title>
+    <ion-title>Ver Asistencia</ion-title>
   </ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/"></ion-back-button>
+  </ion-buttons>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">ver-asistencia</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-list *ngIf="asistencia.length > 0; else noData">
+    <ion-item *ngFor="let registro of asistencia">
+      <ion-label>
+        <h2>Sección: {{ registro.seccion }}</h2>
+        <p>Código: {{ registro.code }}</p>
+        <p>Fecha: {{ formatearFecha(registro.fecha) }}</p>
+        <p>Asistencia: {{ registro.asistencia ? 'Presente' : 'Ausente' }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Mostrar mensaje si no hay datos de asistencia -->
+  <ng-template #noData>
+    <ion-text color="medium">
+      <p>No hay registros de asistencia.</p>
+    </ion-text>
+  </ng-template>
 </ion-content>
